@@ -3,22 +3,26 @@ package com.mercedes.mercedesio.model.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "VEHICLE_AVAILABILIY")
-public class VehicleAvailability {
+public class VehicleAvailability implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ID")
     private long id;
-    @Column(name="VEHICLE_ID")
-    private String vehicleId;
     @Column(name="DAY")
-    private Date day;
+    private String day;
     @Column(name="HOUR")
-    private Date hour;
+    private String hour;
+
+    //bi-directional many-to-one association to VEHICLE
+    @ManyToOne
+    @JoinColumn(name="VEHICLE_ID")
+    private Vehicle vehicleId;
 
 }

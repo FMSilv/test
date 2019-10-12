@@ -2,10 +2,7 @@ package com.mercedes.mercedesio.model.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -13,11 +10,20 @@ import java.util.Date;
 public class Booking {
 
     @Id
+    @Column(name="ID")
     private String id;
-    private String vehicleId;
+    @Column(name="FIRST_NAME")
     private String firstName;
+    @Column(name="LAST_NAME")
     private String lastName;
-    private Date pickupDate;
-    private Date createdAt;
+    @Column(name="PICKUP_DATE")
+    private String pickupDate;
+    @Column(name="CREATED_AT")
+    private String createdAt;
+
+    //bi-directional many-to-one association to VEHICLE
+    @ManyToOne
+    @JoinColumn(name="VEHICLE_ID")
+    private Vehicle vehicleId;
 
 }
