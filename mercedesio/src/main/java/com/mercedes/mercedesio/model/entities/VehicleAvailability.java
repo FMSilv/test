@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "VEHICLE_AVAILABILIY")
+@Table(name = "VEHICLES_AVAILABILIY")
 public class VehicleAvailability implements Serializable {
 
     @Id
@@ -22,7 +22,7 @@ public class VehicleAvailability implements Serializable {
 
     //bi-directional many-to-one association to VEHICLE
     @ManyToOne
-    @JoinColumn(name="VEHICLE_ID")
-    private Vehicle vehicleId;
+    @JoinColumn(name="VEHICLE_ID", nullable = false)
+    private Vehicle vehicle;
 
 }

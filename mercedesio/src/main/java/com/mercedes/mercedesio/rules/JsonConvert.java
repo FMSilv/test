@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mercedes.mercedesio.common.Constantes;
 import com.mercedes.mercedesio.model.entities.*;
+import com.mercedes.mercedesio.service.BookingService;
+import com.mercedes.mercedesio.service.DealerService;
+import com.mercedes.mercedesio.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -13,6 +17,17 @@ import java.util.*;
 
 @Component
 public class JsonConvert {
+
+    private DealerService dealerService;
+    private VehicleService vehicleService;
+    private BookingService bookingService;
+
+    @Autowired
+    public JsonConvert(DealerService dealerService, VehicleService vehicleService, BookingService bookingService) {
+        this.dealerService = dealerService;
+        this.vehicleService = vehicleService;
+        this.bookingService = bookingService;
+    }
 
     public List<Dealer> getDealers(InputStream jsonInputStream) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -29,11 +44,13 @@ public class JsonConvert {
             dealer.setDealerCloseTimeList(storeCloseTimeInfo(dealersNode));
             dealer.setVehicleList(storeVehiclesInfo(dealersNode));
             dealerList.add(dealer);
+            dealerService.saveEntity(dealer);
+
         }
         return dealerList;
     }
 
-    public List<Booking> getBookings(InputStream jsonInputStream) throws IOException {
+    public List<Booking> getBookings(InputStream jsonInputStream) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(jsonInputStream);
         List<Booking> bookingList = new ArrayList<>();
@@ -44,13 +61,14 @@ public class JsonConvert {
             booking.setId(bookingsNode.get(Constantes.ID).asText());
             booking.setFirstName(bookingsNode.get(Constantes.B_FIRSTNAME).asText());
             booking.setLastName(bookingsNode.get(Constantes.B_LASTNAME).asText());
+            booking.setVehicle(vehicleService.getVehicleById(bookingsNode.get(Constantes.B_VEHICLEID).asText()));
             booking.setPickupDate(bookingsNode.get(Constantes.B_PICKUPDATE).asText());
             booking.setCreatedAt(bookingsNode.get(Constantes.B_CREATEDAT).asText());
+            bookingList.add(booking);
+            bookingService.saveEntity(booking);
         }
         return bookingList;
     }
-
-
 
     private List<DealerCloseTime> storeCloseTimeInfo(JsonNode dealersNode){
         List<DealerCloseTime> listDealerCloseTimes = new ArrayList<>();

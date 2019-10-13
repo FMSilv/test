@@ -21,6 +21,7 @@ public class Constantes {
     public static final String BOOKINGS = "bookings";
     public static final String B_FIRSTNAME = "firstName";
     public static final String B_LASTNAME = "lastName";
+    public static final String B_VEHICLEID = "vehicleId";
     public static final String B_CREATEDAT = "createdAt";
     public static final String B_PICKUPDATE = "pickupDate";
 

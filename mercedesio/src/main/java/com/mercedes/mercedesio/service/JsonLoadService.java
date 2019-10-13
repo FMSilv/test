@@ -1,9 +1,6 @@
 package com.mercedes.mercedesio.service;
 
-import com.mercedes.mercedesio.model.entities.Dealer;
-import com.mercedes.mercedesio.model.entities.DealerCloseTime;
-import com.mercedes.mercedesio.model.entities.Vehicle;
-import com.mercedes.mercedesio.model.entities.VehicleAvailability;
+import com.mercedes.mercedesio.model.entities.*;
 import com.mercedes.mercedesio.rules.JsonConvert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +27,9 @@ public class JsonLoadService {
     @Autowired
     private JsonConvert jsonConvert;
 
+    @Autowired
+    private DealerService dealerService;
+
 
     @PostConstruct
     public void init(){
@@ -38,6 +38,7 @@ public class JsonLoadService {
         {
             List<Dealer> dealerList = jsonConvert.getDealers(resource.getInputStream());
 
+            System.out.println("-----------------------------------");
             for(Dealer dealer : dealerList){
                 System.out.println("-----------------------------------");
                 StringBuilder stringBuilder = new StringBuilder();
@@ -73,7 +74,48 @@ public class JsonLoadService {
 
             }
             System.out.println("-----------------------------------");
+            System.out.println("-----------------------------------");
 
+            List<Booking> bookingList = jsonConvert.getBookings(resource.getInputStream());
+            System.out.println("-----------------------------------");
+            StringBuilder stringBuilder = new StringBuilder();
+            for(Booking booking : bookingList){
+                stringBuilder.append("Booking: "+"\n");
+                stringBuilder.append("\tid: "+booking.getId()+"\n");
+                stringBuilder.append("\tFirst Name: "+booking.getFirstName()+"\n");
+                stringBuilder.append("\tLast Name :"+booking.getLastName()+"\n");
+                stringBuilder.append("\tVehicle Id :"+booking.getVehicle().getId()+"\n");
+                stringBuilder.append("\tPickup Date: "+booking.getPickupDate()+"\n");
+                stringBuilder.append("\tCreated At: "+booking.getCreatedAt()+"\n");
+            }
+            System.out.println(stringBuilder.toString());
+            System.out.println("-----------------------------------");
+            System.out.println("-----------------------------------");
+
+/*            Dealer dealer = dealerService.getDealerById("d4f4d287-1ad6-4968-a8ff-e9e0009ad5d1");*/
+            Dealer dealer = dealerService.getDealerById("846679bd-5831-4286-969b-056e9c89d74c");
+            for(Vehicle vehicle : dealer.getVehicleList()){
+                System.out.println("[Id="+vehicle.getId()+"]" +
+                        "[Model="+vehicle.getModel()+"]" +
+                        "[Fuel="+vehicle.getFuel()+"]" +
+                        "[Transmission="+vehicle.getTransmission()+"]" +
+                        "[Availability={day:"+vehicle.getVehicleAvailabilityList().get(0).getDay()+",hour:"+vehicle.getVehicleAvailabilityList().get(0).getHour()+"};" +
+                        "{day:"+vehicle.getVehicleAvailabilityList().get(1).getDay()+",hour:"+vehicle.getVehicleAvailabilityList().get(1).getHour()+"};" +
+                        "{day:"+vehicle.getVehicleAvailabilityList().get(2).getDay()+",hour:"+vehicle.getVehicleAvailabilityList().get(2).getHour()+"};" +
+                        "{day:"+vehicle.getVehicleAvailabilityList().get(3).getDay()+",hour:"+vehicle.getVehicleAvailabilityList().get(3).getHour()+"};");
+            }
+            System.out.println("-----------------------------------");
+            System.out.println("-----------------------------------");
+            System.out.println();
+            Booking booking = dealer.getVehicleList().get(0).getBookingList().get(0);
+            System.out.println("Id: "+booking.getId());
+            System.out.println("VehicleId: "+booking.getVehicle().getId());
+            System.out.println("First Name: "+booking.getFirstName());
+            System.out.println("Last Name: "+booking.getLastName());
+            System.out.println("Created At: "+booking.getCreatedAt());
+            System.out.println("Pickup Date: "+booking.getPickupDate());
+            System.out.println("-----------------------------------");
+            System.out.println("-----------------------------------");
 
         }catch (Exception e){
             LOGGER.error("Resource not found: ", e);

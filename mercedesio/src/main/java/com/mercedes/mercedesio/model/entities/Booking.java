@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "BOOKING")
+@Table(name = "BOOKINGS")
 public class Booking {
 
     @Id
@@ -23,7 +23,7 @@ public class Booking {
 
     //bi-directional many-to-one association to VEHICLE
     @ManyToOne
-    @JoinColumn(name="VEHICLE_ID")
-    private Vehicle vehicleId;
+    @JoinColumn(name="VEHICLE_ID", nullable = false)
+    private Vehicle vehicle;
 
 }

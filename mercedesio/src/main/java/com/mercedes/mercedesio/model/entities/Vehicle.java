@@ -1,6 +1,8 @@
 package com.mercedes.mercedesio.model.entities;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,7 +10,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "VEHICLE")
+@Table(name = "VEHICLES")
 public class Vehicle implements Serializable {
 
     @Id
@@ -23,15 +25,31 @@ public class Vehicle implements Serializable {
 
     //bi-directional many-to-one association to DEALER
     @ManyToOne
-    @JoinColumn(name="DEALER_ID")
+    @JoinColumn(name="DEALER_ID", nullable = false)
     private Dealer dealer;
 
     //bi-directional many-to-one association to VehicleAvailability
-    @OneToMany(mappedBy="vehicleId", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="vehicle", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<VehicleAvailability> vehicleAvailabilityList;
 
     //bi-directional many-to-one association to Booking
-    @OneToMany(mappedBy="vehicleId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="vehicle", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Booking> bookingList;
+
+    public void setVehicleAvailabilityList(List<VehicleAvailability> vehicleAvailabilityList) {
+        for(VehicleAvailability vehicleAvailability : vehicleAvailabilityList){
+            vehicleAvailability.setVehicle(this);
+        }
+        this.vehicleAvailabilityList = vehicleAvailabilityList;
+    }
+
+    public void setBookingList(List<Booking> bookingList) {
+        for(Booking booking : bookingList){
+            booking.setVehicle(this);
+        }
+        this.bookingList = bookingList;
+    }
 
 }
