@@ -13,9 +13,9 @@ public class DealerCloseTime implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="ID")
+    @Column(name="ID", nullable = false)
     private long id;
-    @Column(name="DAY")
+    @Column(name="DAY", nullable = false)
     private String day;
 
     //bi-directional many-to-one association to DEALER

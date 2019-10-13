@@ -14,7 +14,7 @@ import java.util.List;
 public class Vehicle implements Serializable {
 
     @Id
-    @Column(name="ID")
+    @Column(name="ID", nullable = false)
     private String id;
     @Column(name="MODEL")
     public String model;

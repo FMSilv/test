@@ -13,11 +13,11 @@ public class VehicleAvailability implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="ID")
+    @Column(name="ID", nullable = false)
     private long id;
-    @Column(name="DAY")
+    @Column(name="DAY", nullable = false)
     private String day;
-    @Column(name="HOUR")
+    @Column(name="HOUR", nullable = false)
     private String hour;
 
     //bi-directional many-to-one association to VEHICLE

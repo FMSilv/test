@@ -1,5 +1,6 @@
 package com.mercedes.mercedesio.service;
 
+import com.mercedes.mercedesio.common.ApplicationUtilities;
 import com.mercedes.mercedesio.model.entities.*;
 import com.mercedes.mercedesio.rules.JsonConvert;
 import org.slf4j.Logger;
@@ -11,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,14 +20,18 @@ public class JsonLoadService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonLoadService.class);
 
-    @Autowired
     private ResourceLoader resourceLoader;
-
-    @Autowired
     private JsonConvert jsonConvert;
+    private DealerService dealerService;
+    private ApplicationUtilities applicationUtilities;
 
     @Autowired
-    private DealerService dealerService;
+    public JsonLoadService(ResourceLoader resourceLoader, JsonConvert jsonConvert, DealerService dealerService, ApplicationUtilities applicationUtilities) {
+        this.resourceLoader = resourceLoader;
+        this.jsonConvert = jsonConvert;
+        this.dealerService = dealerService;
+        this.applicationUtilities = applicationUtilities;
+    }
 
 
     @PostConstruct
@@ -36,6 +39,11 @@ public class JsonLoadService {
         Resource resource = resourceLoader.getResource("classpath:"+"json/dataset.json");
         try
         {
+/*            double distance1 = applicationUtilities.calculateDistanceBetweenToGeograficPoints(37.104404, -8.236308, 38.746721, -9.229837);
+            System.out.println("distance1: "+distance1);
+            double distance2 = applicationUtilities.calculateDistanceBetweenToGeograficPoints(38.746721, -9.229837, 37.104404, -8.236308);
+            System.out.println("distance2: "+distance2);*/
+
             List<Dealer> dealerList = jsonConvert.getDealers(resource.getInputStream());
 
             System.out.println("-----------------------------------");
@@ -92,8 +100,7 @@ public class JsonLoadService {
             System.out.println("-----------------------------------");
             System.out.println("-----------------------------------");
 
-/*            Dealer dealer = dealerService.getDealerById("d4f4d287-1ad6-4968-a8ff-e9e0009ad5d1");*/
-            Dealer dealer = dealerService.getDealerById("846679bd-5831-4286-969b-056e9c89d74c");
+            Dealer dealer = dealerService.getDealerById("d4f4d287-1ad6-4968-a8ff-e9e0009ad5d1");
             for(Vehicle vehicle : dealer.getVehicleList()){
                 System.out.println("[Id="+vehicle.getId()+"]" +
                         "[Model="+vehicle.getModel()+"]" +
@@ -104,16 +111,6 @@ public class JsonLoadService {
                         "{day:"+vehicle.getVehicleAvailabilityList().get(2).getDay()+",hour:"+vehicle.getVehicleAvailabilityList().get(2).getHour()+"};" +
                         "{day:"+vehicle.getVehicleAvailabilityList().get(3).getDay()+",hour:"+vehicle.getVehicleAvailabilityList().get(3).getHour()+"};");
             }
-            System.out.println("-----------------------------------");
-            System.out.println("-----------------------------------");
-            System.out.println();
-            Booking booking = dealer.getVehicleList().get(0).getBookingList().get(0);
-            System.out.println("Id: "+booking.getId());
-            System.out.println("VehicleId: "+booking.getVehicle().getId());
-            System.out.println("First Name: "+booking.getFirstName());
-            System.out.println("Last Name: "+booking.getLastName());
-            System.out.println("Created At: "+booking.getCreatedAt());
-            System.out.println("Pickup Date: "+booking.getPickupDate());
             System.out.println("-----------------------------------");
             System.out.println("-----------------------------------");
 

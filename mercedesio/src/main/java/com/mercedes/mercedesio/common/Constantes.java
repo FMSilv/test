@@ -24,5 +24,9 @@ public class Constantes {
     public static final String B_VEHICLEID = "vehicleId";
     public static final String B_CREATEDAT = "createdAt";
     public static final String B_PICKUPDATE = "pickupDate";
+    /* Json nodes - end*/
+
+    public static final Double EARTH_RADIUS_METERS = new Double(6371000);
+
 
 }

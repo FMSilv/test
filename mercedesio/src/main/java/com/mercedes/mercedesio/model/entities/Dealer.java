@@ -14,9 +14,9 @@ import java.util.List;
 public class Dealer implements Serializable {
 
     @Id
-    @Column(name="ID")
+    @Column(name="ID", nullable = false)
     private String id;
-    @Column(name="NAME")
+    @Column(name="NAME", nullable = false)
     private String name;
     @Column(name="LATITUDE")
     private double latitude;
