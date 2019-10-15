@@ -37,4 +37,13 @@ public class TestListVehiclesBy {
 				.andExpect(status().isOk());
 	}
 
+	@Test
+	public void testFindVehicleById() throws Exception {
+		mockMvc.perform(
+			get("/vehicle?id=778a04fd-0a6a-4dc7-92bb-a7517608efc2")
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk());
+	}
+
 }

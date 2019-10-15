@@ -111,7 +111,7 @@ public class JsonLoadService {
                         "{day:"+vehicle.getVehicleAvailabilityList().get(3).getDay()+",hour:"+vehicle.getVehicleAvailabilityList().get(3).getHour()+"};");
             }*/
             System.out.println("-----------------------------------");
-            System.out.println("-----------------------------------");*/
+            System.out.println("-----------------------------------");
 
         }catch (Exception e){
             LOGGER.error("Resource not found: ", e);
