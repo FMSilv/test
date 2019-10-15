@@ -14,16 +14,13 @@ import java.util.List;
 @Service
 public class DealerService {
 
+    @Autowired
     private IDealerRepository dealerRepository;
+    @Autowired
     private IVehicleRepository vehicleRepository;
+    @Autowired
     private ApplicationUtilities applicationUtilities;
 
-    @Autowired
-    public DealerService(IDealerRepository dealerRepository, IVehicleRepository vehicleRepository, ApplicationUtilities applicationUtilities) {
-        this.dealerRepository = dealerRepository;
-        this.vehicleRepository = vehicleRepository;
-        this.applicationUtilities = applicationUtilities;
-    }
 
     public void saveEntity(Dealer dealer){
         dealerRepository.save(dealer);
@@ -102,6 +99,15 @@ public class DealerService {
                 dealerList.add(vehicle.getDealer());
                 flagVehicleExistsInDealer = false;
             }
+        }
+        return dealerList;
+    }
+
+    public List<Dealer> getAllDealers() throws Exception {
+        List<Dealer> dealerList = dealerRepository.findAll();
+        if(null == dealerList || dealerList.isEmpty())
+        {
+            throw new Exception("No vehicles found!");
         }
         return dealerList;
     }

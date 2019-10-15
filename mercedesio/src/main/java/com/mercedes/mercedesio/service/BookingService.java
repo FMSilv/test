@@ -8,20 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Service
 public class BookingService {
 
-    private IBookingRepository bookingRepository;
-    private IVehicleRepository vehicleRepository;
-
     @Autowired
-    public BookingService(IBookingRepository bookingRepository, IVehicleRepository vehicleRepository) {
-        this.bookingRepository = bookingRepository;
-        this.vehicleRepository = vehicleRepository;
-        this.vehicleRepository = vehicleRepository;
-    }
+    private IBookingRepository bookingRepository;
+    @Autowired
+    private IVehicleRepository vehicleRepository;
 
     public void checkAndSaveEntity(Booking booking) throws Exception {
         boolean flagAlreadyBooked = false;
@@ -58,7 +54,7 @@ public class BookingService {
     }
 
     public Booking getBookByFirstNameAndLastNameAndPickupDate(String firstName, String lastName, String pickupDate) throws Exception {
-        Booking booking = bookingRepository.findByFistnameAndLastNameAndPickupdate(firstName, lastName, pickupDate);
+        Booking booking = bookingRepository.findByFirstNameAndLastNameAndPickupDate(firstName, lastName, pickupDate);
         if(null == booking)
         {
             throw new Exception("Vehicle not found!");

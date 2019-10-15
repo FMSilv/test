@@ -20,18 +20,16 @@ public class JsonLoadService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonLoadService.class);
 
-    private ResourceLoader resourceLoader;
-    private JsonConvert jsonConvert;
-    private DealerService dealerService;
-    private ApplicationUtilities applicationUtilities;
-
     @Autowired
-    public JsonLoadService(ResourceLoader resourceLoader, JsonConvert jsonConvert, DealerService dealerService, ApplicationUtilities applicationUtilities) {
-        this.resourceLoader = resourceLoader;
-        this.jsonConvert = jsonConvert;
-        this.dealerService = dealerService;
-        this.applicationUtilities = applicationUtilities;
-    }
+    private ResourceLoader resourceLoader;
+    @Autowired
+    private JsonConvert jsonConvert;
+    @Autowired
+    private DealerService dealerService;
+    @Autowired
+    private ApplicationUtilities applicationUtilities;
+    @Autowired
+    private VehicleService vehicleService;
 
 
     @PostConstruct
@@ -45,8 +43,9 @@ public class JsonLoadService {
             System.out.println("distance2: "+distance2);*/
 
             List<Dealer> dealerList = jsonConvert.getDealers(resource.getInputStream());
+            List<Booking> bookingList = jsonConvert.getBookings(resource.getInputStream());
 
-            System.out.println("-----------------------------------");
+ /*           System.out.println("-----------------------------------");
             for(Dealer dealer : dealerList){
                 System.out.println("-----------------------------------");
                 StringBuilder stringBuilder = new StringBuilder();
@@ -112,7 +111,7 @@ public class JsonLoadService {
                         "{day:"+vehicle.getVehicleAvailabilityList().get(3).getDay()+",hour:"+vehicle.getVehicleAvailabilityList().get(3).getHour()+"};");
             }
             System.out.println("-----------------------------------");
-            System.out.println("-----------------------------------");
+            System.out.println("-----------------------------------");*/
 
         }catch (Exception e){
             LOGGER.error("Resource not found: ", e);

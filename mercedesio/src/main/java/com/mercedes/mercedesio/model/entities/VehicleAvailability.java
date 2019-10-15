@@ -1,12 +1,10 @@
 package com.mercedes.mercedesio.model.entities;
 
-import lombok.Data;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
-@Data
+
 @Entity
 @Table(name = "VEHICLES_AVAILABILIY")
 public class VehicleAvailability implements Serializable {
@@ -22,7 +20,32 @@ public class VehicleAvailability implements Serializable {
 
     //bi-directional many-to-one association to VEHICLE
     @ManyToOne
-    @JoinColumn(name="VEHICLE_ID", nullable = false)
+    @JoinColumn(name="VEHICLE_ID", referencedColumnName = "ID", nullable = false)
+    @JsonBackReference
     private Vehicle vehicle;
 
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
 }

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IBookingRepository extends JpaRepository<Booking, String> {
 
-    public Booking findByFistnameAndLastNameAndPickupdate(String firstName, String lastName, String pickupDate);
+	Booking findByFirstNameAndLastNameAndPickupDate(String firstName, String lastName, String pickupDate);
 
 }
