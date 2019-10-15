@@ -18,16 +18,13 @@ import java.util.*;
 @Component
 public class JsonConvert {
 
+    @Autowired
     private DealerService dealerService;
+    @Autowired
     private VehicleService vehicleService;
+    @Autowired
     private BookingService bookingService;
 
-    @Autowired
-    public JsonConvert(DealerService dealerService, VehicleService vehicleService, BookingService bookingService) {
-        this.dealerService = dealerService;
-        this.vehicleService = vehicleService;
-        this.bookingService = bookingService;
-    }
 
     public List<Dealer> getDealers(InputStream jsonInputStream) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -97,7 +94,6 @@ public class JsonConvert {
         }
         return vehicleList;
     }
-
 
     private List<VehicleAvailability> storeVehicleAvailability(JsonNode availabilityNode){
         List<VehicleAvailability> vehicleAvailabilityList = new ArrayList<>();

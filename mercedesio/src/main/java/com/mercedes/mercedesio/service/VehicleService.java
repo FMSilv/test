@@ -12,12 +12,8 @@ import java.util.List;
 @Service
 public class VehicleService {
 
-    private IVehicleRepository vehicleRepository;
-
     @Autowired
-    public VehicleService(IVehicleRepository vehicleRepository) {
-        this.vehicleRepository = vehicleRepository;
-    }
+    private IVehicleRepository vehicleRepository;
 
 
     public Vehicle getVehicleById(String vehicleId) throws Exception {
@@ -65,5 +61,13 @@ public class VehicleService {
         return vehicleList;
     }
 
+    public List<Vehicle> getAllVehicles() throws Exception {
+        List<Vehicle> vehicleList = vehicleRepository.findAll();
+        if(null == vehicleList || vehicleList.isEmpty())
+        {
+            throw new Exception("No vehicles found!");
+        }
+        return vehicleList;
+    }
 
 }

@@ -1,17 +1,13 @@
 package com.mercedes.mercedesio.model.entities;
 
-import lombok.Data;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
-@Data
-@Setter
 @Entity
 @Table(name = "DEALERS")
 public class Dealer implements Serializable {
@@ -27,13 +23,15 @@ public class Dealer implements Serializable {
     private double longitude;
 
     //bi-directional many-to-one association to DealerCloseTime
-    @OneToMany(mappedBy="dealer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    /*@Fetch(value = FetchMode.SUBSELECT)*/
+    @OneToMany(mappedBy="dealer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JsonManagedReference
     private List<DealerCloseTime> dealerCloseTimeList;
 
     //bi-directional many-to-one association to Vehicle
-    @OneToMany(mappedBy="dealer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    /*@Fetch(value = FetchMode.SUBSELECT)*/
+    @OneToMany(mappedBy="dealer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JsonManagedReference
     private List<Vehicle> vehicleList;
 
     public void setVehicleList(List<Vehicle> vehicleList) {
@@ -50,33 +48,17 @@ public class Dealer implements Serializable {
         this.dealerCloseTimeList = dealerCloseTimeList;
     }
 
-    public DealerCloseTime addDealerCloseTime(DealerCloseTime dealerCloseTime) {
-        getDealerCloseTimeList().add(dealerCloseTime);
-        dealerCloseTime.setDealer(this);
-
-        return dealerCloseTime;
-    }
-
-    public Vehicle removeVehicle(Vehicle vehicle) {
-        getVehicleList().remove(vehicle);
-        vehicle.setDealer(null);
-
-        return vehicle;
-    }
-
-
-/*    public List<Vehicle> getVehicleList() {
+    public List<Vehicle> getVehicleList() {
         return this.vehicleList;
     }
 
-    public void setVehicleList(List<Vehicle> vehicleList) {
+/*    public void setVehicleList(List<Vehicle> vehicleList) {
         this.vehicleList = vehicleList;
-    }
+    }*/
 
     public Vehicle addVehicle(Vehicle vehicle) {
         getVehicleList().add(vehicle);
         vehicle.setDealer(this);
-
         return vehicle;
     }
 
@@ -85,6 +67,59 @@ public class Dealer implements Serializable {
         vehicle.setDealer(null);
 
         return vehicle;
+    }
+
+
+    public List<DealerCloseTime> getDealerCloseTimeList() {
+        return this.dealerCloseTimeList;
+    }
+
+/*    public void setDealerCloseTimeList(List<DealerCloseTime> dealerCloseTimeList) {
+        this.dealerCloseTimeList = dealerCloseTimeList;
     }*/
 
+    public DealerCloseTime addDealerCloseTime(DealerCloseTime dealerCloseTime) {
+        getDealerCloseTimeList().add(dealerCloseTime);
+        dealerCloseTime.setDealer(this);
+        return dealerCloseTime;
+    }
+
+    public DealerCloseTime removeDealerCloseTime(DealerCloseTime dealerCloseTime) {
+        getDealerCloseTimeList().remove(dealerCloseTime);
+        dealerCloseTime.setDealer(null);
+
+        return dealerCloseTime;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 }
