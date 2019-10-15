@@ -58,7 +58,7 @@ public class BookingService {
     }
 
     public Booking getBookByFirstNameAndLastNameAndPickupDate(String firstName, String lastName, String pickupDate) throws Exception {
-        Booking booking = bookingRepository.findByFistnameAndLastNameAndPickupdate(firstName, lastName, pickupDate);
+        Booking booking = bookingRepository.findByFirstNameAndLastNameAndPickupDate(firstName, lastName, pickupDate);
         if(null == booking)
         {
             throw new Exception("Vehicle not found!");

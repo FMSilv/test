@@ -7,6 +7,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -29,13 +30,13 @@ public class Vehicle implements Serializable {
     private Dealer dealer;
 
     //bi-directional many-to-one association to VehicleAvailability
-    @OneToMany(mappedBy="vehicle", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany(mappedBy="vehicle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    /*@Fetch(value = FetchMode.SUBSELECT)*/
     private List<VehicleAvailability> vehicleAvailabilityList;
 
     //bi-directional many-to-one association to Booking
-    @OneToMany(mappedBy="vehicle", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany(mappedBy="vehicle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    /*@Fetch(value = FetchMode.SUBSELECT)*/
     private List<Booking> bookingList;
 
     public void setVehicleAvailabilityList(List<VehicleAvailability> vehicleAvailabilityList) {

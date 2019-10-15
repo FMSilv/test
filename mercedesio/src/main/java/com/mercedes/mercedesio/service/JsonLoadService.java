@@ -101,7 +101,7 @@ public class JsonLoadService {
             System.out.println("-----------------------------------");
 
             Dealer dealer = dealerService.getDealerById("d4f4d287-1ad6-4968-a8ff-e9e0009ad5d1");
-            for(Vehicle vehicle : dealer.getVehicleList()){
+/*            for(Vehicle vehicle : dealer.getVehicleList()){
                 System.out.println("[Id="+vehicle.getId()+"]" +
                         "[Model="+vehicle.getModel()+"]" +
                         "[Fuel="+vehicle.getFuel()+"]" +
@@ -110,7 +110,7 @@ public class JsonLoadService {
                         "{day:"+vehicle.getVehicleAvailabilityList().get(1).getDay()+",hour:"+vehicle.getVehicleAvailabilityList().get(1).getHour()+"};" +
                         "{day:"+vehicle.getVehicleAvailabilityList().get(2).getDay()+",hour:"+vehicle.getVehicleAvailabilityList().get(2).getHour()+"};" +
                         "{day:"+vehicle.getVehicleAvailabilityList().get(3).getDay()+",hour:"+vehicle.getVehicleAvailabilityList().get(3).getHour()+"};");
-            }
+            }*/
             System.out.println("-----------------------------------");
             System.out.println("-----------------------------------");
 

@@ -45,7 +45,6 @@ public class JsonConvert {
             dealer.setVehicleList(storeVehiclesInfo(dealersNode));
             dealerList.add(dealer);
             dealerService.saveEntity(dealer);
-
         }
         return dealerList;
     }
